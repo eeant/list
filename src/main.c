@@ -1,6 +1,6 @@
 #include "list.h"
 #include <stdio.h>
-
+/*Print List L*/
 void PrintList(List L)
 {
 	Position P = NULL;
@@ -11,7 +11,7 @@ void PrintList(List L)
 		P = P->Next;
 	}
 }
-
+/**Print L by P Point*/
 void PrintLots(List L, List P)
 {
 	int  count = 0;
@@ -29,7 +29,21 @@ void PrintLots(List L, List P)
 		Lpos = Advance(Lpos);
 	}
 }
+/* BeforeP is the cell before the two adjacent cells that are to be swapped. */
+/* Error checks are omitted for clarity. */
+void SwapWithNext(Position BeforeP,List L)
+{
+	Position P,AfterP;
+	
+	P = BeforeP->Next;
+	AfterP = P->Next;/* Both P and AfterP assumed not NULL. */
+	
+	BeforeP->Next = AfterP;
+	P->Next = AfterP->Next;
+	AfterP->Next = P;
 
+
+}
 
 int main(int argc,char *argv[])
 {
@@ -46,7 +60,7 @@ int main(int argc,char *argv[])
 		
 		Insert(input,L,insertP);		
 	}while(input!=-1);
-	
+	printf("L List's Elements are:\n");
 	PrintList(L);	
 	
 	P = MakeEmpty(P);
@@ -58,9 +72,15 @@ int main(int argc,char *argv[])
 		Insert(input,P,insertP);
 	}while(input > 1);
 	
-	
+	printf("P List's Elements are:\n");	
 	PrintList(P);
+	printf("L List's Elements in Points by P List's Elements are:\n");
 	PrintLots(L,P);
+	printf("before swap  Element:\n");
+	PrintList(L);
+	printf("afeter swap 2nd and 3rd element:\n");
+	SwapWithNext(L->Next->Next,L);
+	PrintList(L);	 
 	DeleteList(L);
 	DeleteList(P);
 	return 0;
