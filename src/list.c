@@ -69,16 +69,28 @@ Position FindPrevious(ElementType X, List L)
 /*Insett after legal position P*/
 /*Header implementatioon assumed*/
 /*Parameter L is unused in this implementtation*/
-void Insert(ElementType X,List L, Position P)
+List Insert(ElementType X,List L, Position P)
 {
-	Position TmpCell;	
+	Position TmpCell;
 	TmpCell = malloc(sizeof(struct Node));
 	if (TmpCell == NULL)
 		FatalError("Out of space!!!");
 	
 	TmpCell->Element = X;
-	TmpCell->Next = P->Next;
-	P->Next = TmpCell;
+	
+	if (P == NULL)
+	{
+		TmpCell->Next = L->Next;
+		L->Next=TmpCell;
+	}
+	else
+	{
+		TmpCell->Next = P->Next;
+		P->Next = TmpCell;
+	}
+
+
+	return L;
 }
 
 void DeleteList(List L)
@@ -107,7 +119,16 @@ Position First(List L)
 
 Position Advance(Position P)
 {
-	return P->Next;
+	Position ReturnP;
+	if (P == NULL)
+	{
+		ReturnP = NULL;
+	}
+	else
+	{
+		ReturnP = P->Next;
+	}
+	return ReturnP;
 }
 ElementType Retrieve(Position P)
 {
